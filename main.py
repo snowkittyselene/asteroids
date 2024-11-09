@@ -4,6 +4,10 @@ from constants import *
 
 
 def game_loop(screen):
+    # prepare clock and ∆t
+    clock = pygame.time.Clock()
+    dt = 0
+
     while True:
         # check if quit
         for event in pygame.event.get():
@@ -11,7 +15,10 @@ def game_loop(screen):
                 return
 
         screen.fill((0, 0, 0))
-    pygame.display.flip()
+        pygame.display.flip()
+
+        # go to next frame
+        dt = clock.tick(60) / 1000
 
 
 def main():
