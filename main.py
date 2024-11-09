@@ -1,6 +1,7 @@
 # import statements
 import pygame
 from constants import *
+from player import Player
 
 
 def game_loop(screen):
@@ -8,13 +9,17 @@ def game_loop(screen):
     clock = pygame.time.Clock()
     dt = 0
 
+    # prepare player
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
     while True:
         # check if quit
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
 
-        screen.fill((0, 0, 0))
+        screen.fill("black")
+        player.draw(screen)
         pygame.display.flip()
 
         # go to next frame
