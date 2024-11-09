@@ -11,6 +11,7 @@ def game_loop(screen):
     # prepare clock and ∆t
     clock = pygame.time.Clock()
     dt = 0
+    paused = False
 
     # prepare sprite groups
     updatable = pygame.sprite.Group()
@@ -32,21 +33,27 @@ def game_loop(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    paused = not paused
+                if event.key == pygame.K_ESCAPE:
+                    return
 
-        # update things
-        for sprite in updatable:
-            sprite.update(dt)
+        if not paused:
+            # update things
+            for sprite in updatable:
+                sprite.update(dt)
 
-        # check for collision
-        for asteroid in asteroids:
-            if asteroid.check_collision(player):
-                print("Game over!")
-                exit()
+            # check for collision
+            for asteroid in asteroids:
+                if asteroid.check_collision(player):
+                    print("Game over!")
+                    exit()
 
-        # draw things
-        screen.fill("black")
-        for sprite in drawable:
-            sprite.draw(screen)
+            # draw things
+            screen.fill("black")
+            for sprite in drawable:
+                sprite.draw(screen)
 
         # render then go to next frame
         pygame.display.flip()
