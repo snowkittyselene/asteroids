@@ -34,6 +34,12 @@ def game_loop(screen):
         for sprite in updatable:
             sprite.update(dt)
 
+        # check for collision
+        for asteroid in asteroids:
+            if asteroid.check_collision(player):
+                print("Game over!")
+                exit()
+
         # draw things
         screen.fill("black")
         for sprite in drawable:
