@@ -9,7 +9,12 @@ def game_loop(screen):
     clock = pygame.time.Clock()
     dt = 0
 
-    # prepare player
+    # prepare sprite groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    # create player
+    Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while True:
@@ -18,12 +23,14 @@ def game_loop(screen):
             if event.type == pygame.QUIT:
                 return
 
-        # draw the screen
-        screen.fill("black")
+        # update things
+        for sprite in updatable:
+            sprite.update(dt)
 
-        # draw the player
-        player.draw(screen)
-        player.update(dt)
+        # draw things
+        screen.fill("black")
+        for sprite in drawable:
+            sprite.draw(screen)
 
         # render then go to next frame
         pygame.display.flip()
